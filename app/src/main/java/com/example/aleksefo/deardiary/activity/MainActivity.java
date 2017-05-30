@@ -1,4 +1,4 @@
-package com.example.aleksefo.deardiary;
+package com.example.aleksefo.deardiary.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,11 +11,12 @@ import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.example.aleksefo.deardiary.Model.Entry;
+import com.example.aleksefo.deardiary.R;
+import com.example.aleksefo.deardiary.model.Entry;
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.Realm.Transaction;
 import io.realm.RealmResults;
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -43,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
 			public void execute(Realm realm) {
 				Entry t = mRealm.createObject(Entry.class, UUID.randomUUID().toString());
 //				t.setId(UUID.randomUUID().toString());
-				t.setTitle("Hillo");
-//				t.setDate(new Date());
+				t.setTitle("Hilloo");
+				t.setDate(new Date());
 				t.setDescr("description");
 			}
 		});
@@ -78,9 +79,11 @@ public class MainActivity extends AppCompatActivity {
 	public void onViewClicked(View view) {
 //		Snackbar.make(view, "Replace plz", Snackbar.LENGTH_LONG)
 //			.setAction("Action", null).show();
-		RealmResults<Entry> entries = mRealm.where(Entry.class).findAll();
+		RealmResults<Entry> entries = mRealm.where(Entry.class)
+			.contains("title", "Hillo", Case.INSENSITIVE)
+			.findAll();
 		for (Entry e: entries) {
-			Log.d("Realm", e.getTitle() + e.getId());
+			Log.d("Realm", e.getTitle() + e.getId() + e.getDate());
 		}
 	}
 

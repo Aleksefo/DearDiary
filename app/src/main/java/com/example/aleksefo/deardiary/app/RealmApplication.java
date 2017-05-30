@@ -1,4 +1,4 @@
-package com.example.aleksefo.deardiary;
+package com.example.aleksefo.deardiary.app;
 
 import android.app.Application;
 import io.realm.Realm;

@@ -1,14 +1,13 @@
-package com.example.aleksefo.deardiary.Model;
+package com.example.aleksefo.deardiary.model;
 
 import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.Required;
 import java.util.Date;
 
 public class Entry extends RealmObject {
 
 	//	@Required todo set Required
+//	The @PrimaryKey annotation indicates that this field is set as a Primary key and must not be null.
 	@PrimaryKey
 	private String id;
 	//	@Required
