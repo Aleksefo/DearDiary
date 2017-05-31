@@ -14,5 +14,4 @@ public class RealmApplication extends Application {
 		Realm.setDefaultConfiguration(realmConfiguration);
 //		Realm.deleteRealm(realmConfiguration);
 	}
-
 }

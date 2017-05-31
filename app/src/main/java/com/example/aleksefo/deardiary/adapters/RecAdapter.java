@@ -23,7 +23,6 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 		Log.d(TAG, "RecAdapter: constr");
 	}
 
-
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		Log.d(TAG, "onCreateViewHolder: created");
@@ -33,15 +32,8 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 		return new ViewHolder(itemView);
 	}
 
-//	@Override
-//	public void onBindViewHolder(ViewHolder viewHolder, int i) {
-//
-//	}
-
 	@Override
 	public long getItemId(int index) {
-		//noinspection ConstantConditions
-//		return getItem(index).getCount();
 		return index;
 	}
 
@@ -53,7 +45,6 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 		holder.title.setText(obj.getTitle());
 	}
 
-
 	class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 		TextView title;
 		public Entry data;
@@ -63,7 +54,7 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 			title = (TextView) view.findViewById(R.id.textview);
 			view.setOnLongClickListener(this);
 		}
-
+//todo onLongClick
 		@Override
 		public boolean onLongClick(View v) {
 			//activity.deleteItem(data);

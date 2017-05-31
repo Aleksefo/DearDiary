@@ -3,6 +3,7 @@ package com.example.aleksefo.deardiary.realm;
 import android.app.Activity;
 import android.app.Application;
 import android.support.v4.app.Fragment;
+import com.example.aleksefo.deardiary.activity.MainActivity;
 import com.example.aleksefo.deardiary.model.Entry;
 import io.realm.Realm;
 import io.realm.Realm.Transaction;
@@ -59,6 +60,18 @@ public class RealmController {
 			@Override
 			public void execute(Realm realm) {
 				realm.deleteAll();
+			}
+		});
+	}
+
+	public void addEntry() {
+		realm.executeTransaction(new Transaction() {
+			@Override
+			public void execute(Realm realm) {
+				Entry t = RealmController.this.realm.createObject(Entry.class, UUID.randomUUID().toString());
+				t.setTitle("Sup");
+				t.setDate(new Date());
+				t.setDescr("description");
 			}
 		});
 	}

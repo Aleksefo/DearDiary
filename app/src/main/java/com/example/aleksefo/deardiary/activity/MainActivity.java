@@ -16,6 +16,7 @@ import butterknife.OnClick;
 import com.example.aleksefo.deardiary.R;
 import com.example.aleksefo.deardiary.adapters.RecAdapter;
 import com.example.aleksefo.deardiary.model.Entry;
+import com.example.aleksefo.deardiary.realm.RealmController;
 import io.realm.Case;
 import io.realm.Realm;
 import io.realm.Realm.Transaction;
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
 	private Realm realm;
 	private RecyclerView recyclerView;
-	private Menu menu;
 	private RecAdapter adapter;
 
 	@Override
@@ -45,27 +45,10 @@ public class MainActivity extends AppCompatActivity {
 		setSupportActionBar(toolbar);
 
 		realm = Realm.getDefaultInstance();
-//		RealmResults<Entry> entries = realm
-//			.where(Entry.class)
-//			.findAll();
 		recyclerView = (RecyclerView) findViewById(R.id.recycler);
 		adapter = new RecAdapter(realm.where(Entry.class).findAll());
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setAdapter(adapter);
-
-//		create a task
-		realm.executeTransaction(new Transaction() {
-			@Override
-			public void execute(Realm realm) {
-				Entry t = MainActivity.this.realm.createObject(Entry.class, UUID.randomUUID().toString());
-//				t.setId(UUID.randomUUID().toString());
-				t.setTitle("Hilloo");
-				t.setDate(new Date());
-				t.setDescr("description");
-			}
-		});
-
-
 	}
 
 	@Override
@@ -94,12 +77,13 @@ public class MainActivity extends AppCompatActivity {
 	public void onViewClicked(View view) {
 //		Snackbar.make(view, "Replace plz", Snackbar.LENGTH_LONG)
 //			.setAction("Action", null).show();
-		RealmResults<Entry> entries = realm.where(Entry.class)
-			.contains("title", "Hillo", Case.INSENSITIVE)
-			.findAll();
-		for (Entry e: entries) {
-			Log.d("Realm", e.getTitle() + e.getId() + e.getDate());
-		}
+//		RealmResults<Entry> entries = realm.where(Entry.class)
+//			.contains("title", "Hillo", Case.INSENSITIVE)
+//			.findAll();
+//		for (Entry e: entries) {
+//			Log.d("Realm", e.getTitle() + e.getId() + e.getDate());
+//		}
+		RealmController.with(this).addEntry();
 	}
 
 	//to prevent memory leak
