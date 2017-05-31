@@ -17,13 +17,8 @@ import com.example.aleksefo.deardiary.R;
 import com.example.aleksefo.deardiary.adapters.RecAdapter;
 import com.example.aleksefo.deardiary.model.Entry;
 import com.example.aleksefo.deardiary.realm.RealmController;
-import io.realm.Case;
 import io.realm.Realm;
-import io.realm.Realm.Transaction;
-import io.realm.RealmResults;
-import java.util.Date;
-import java.util.UUID;
-
+//todo swipe to delete
 public class MainActivity extends AppCompatActivity {
 
 	@BindView(R.id.fab)

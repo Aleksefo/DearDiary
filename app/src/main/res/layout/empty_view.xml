@@ -9,7 +9,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center_horizontal"
-    android:text="Looks like you are all done\n(or haven\'t added anything)!"
+    android:text="Looks like you haven't added anything! Click on add button to start."
     android:textSize="24sp"
     />
 </FrameLayout>
+<!--todo add enter-->

@@ -13,6 +13,7 @@ import com.example.aleksefo.deardiary.model.Entry;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
+//todo custom text if no items in db
 
 public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewHolder> {
 
@@ -20,15 +21,12 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 
 	public RecAdapter(OrderedRealmCollection<Entry> data) {
 		super(data, true);
-		Log.d(TAG, "RecAdapter: constr");
 	}
 
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		Log.d(TAG, "onCreateViewHolder: created");
 		View itemView = LayoutInflater.from(parent.getContext())
 			.inflate(R.layout.entry, parent, false);
-		Log.d(TAG, "onCreateViewHolder: created");
 		return new ViewHolder(itemView);
 	}
 
