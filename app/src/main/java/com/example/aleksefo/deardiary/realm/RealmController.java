@@ -64,14 +64,16 @@ public class RealmController {
 		});
 	}
 
-	public void addEntry() {
+	public void addEntry(String title, String descr) {
+		final String mTitle = title;
+		final String mDescr = descr;
 		realm.executeTransaction(new Transaction() {
 			@Override
 			public void execute(Realm realm) {
 				Entry t = RealmController.this.realm.createObject(Entry.class, UUID.randomUUID().toString());
-				t.setTitle("Sup");
+				t.setTitle(mTitle);
 				t.setDate(new Date());
-				t.setDescr("description");
+				t.setDescr(mDescr);
 			}
 		});
 	}
