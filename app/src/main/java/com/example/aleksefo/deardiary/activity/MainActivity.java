@@ -1,12 +1,12 @@
 package com.example.aleksefo.deardiary.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +16,6 @@ import butterknife.OnClick;
 import com.example.aleksefo.deardiary.R;
 import com.example.aleksefo.deardiary.adapters.RecAdapter;
 import com.example.aleksefo.deardiary.model.Entry;
-import com.example.aleksefo.deardiary.realm.RealmController;
 import io.realm.Realm;
 //todo swipe to delete
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView = (RecyclerView) findViewById(R.id.recycler);
 		adapter = new RecAdapter(realm.where(Entry.class).findAll());
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
+		recyclerView.setHasFixedSize(true);
 		recyclerView.setAdapter(adapter);
 	}
 
@@ -62,8 +62,13 @@ public class MainActivity extends AppCompatActivity {
 
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.action_settings) {
-			Log.d(TAG, "onOptionsItemSelected: ");
+
 		}
+		//todo add stuff
+//		if(id == R.id.action_add_task){
+
+//		}
+
 
 		return super.onOptionsItemSelected(item);
 	}
@@ -78,7 +83,9 @@ public class MainActivity extends AppCompatActivity {
 //		for (Entry e: entries) {
 //			Log.d("Realm", e.getTitle() + e.getId() + e.getDate());
 //		}
-		RealmController.with(this).addEntry();
+//		RealmController.with(this).addEntry();
+		Intent addTaskIntent = new Intent(MainActivity.this, NewActivity.class);
+		startActivity(addTaskIntent);
 	}
 
 	//to prevent memory leak
@@ -87,4 +94,6 @@ public class MainActivity extends AppCompatActivity {
 		super.onDestroy();
 		realm.close();
 	}
+
+
 }
