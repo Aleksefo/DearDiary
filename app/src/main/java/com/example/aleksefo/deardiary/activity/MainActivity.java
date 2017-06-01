@@ -7,16 +7,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.example.aleksefo.deardiary.R;
 import com.example.aleksefo.deardiary.adapters.RecAdapter;
 import com.example.aleksefo.deardiary.model.Entry;
+import com.example.aleksefo.deardiary.realm.RealmController;
 import io.realm.Realm;
+import io.realm.RealmResults;
+
 //todo swipe to delete
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setAdapter(adapter);
+
+		registerForContextMenu(recyclerView);
 	}
 
 	@Override
@@ -86,6 +97,30 @@ public class MainActivity extends AppCompatActivity {
 //		RealmController.with(this).addEntry();
 		Intent addTaskIntent = new Intent(MainActivity.this, NewActivity.class);
 		startActivity(addTaskIntent);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		int position = -1;
+		try {
+			position = ((RecAdapter) recyclerView.getAdapter()).getPosition();
+
+		} catch (Exception e) {
+			Log.d(TAG, e.getLocalizedMessage(), e);
+			return super.onContextItemSelected(item);
+		}
+		switch (item.getItemId()) {
+			case R.id.action_edit:
+
+				return true;
+			case R.id.action_share:
+				return true;
+			case R.id.action_delete:
+				RealmController.with(this).deleteEntry(position);
+				return true;
+			default:
+				return super.onContextItemSelected(item);
+		}
 	}
 
 	//to prevent memory leak
