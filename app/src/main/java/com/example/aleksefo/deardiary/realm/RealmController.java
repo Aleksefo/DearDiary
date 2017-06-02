@@ -26,7 +26,16 @@ public class RealmController {
 		realm = Realm.getDefaultInstance();
 		this.context = application;
 	}
-
+	public RealmController(Context context) {
+		realm = Realm.getDefaultInstance();
+		this.context = context;
+	}
+	public static RealmController with(Context context) {
+		if (instance == null) {
+			instance = new RealmController(context);
+		}
+		return instance;
+	}
 	public static RealmController with(Fragment fragment) {
 		if (instance == null) {
 			instance = new RealmController(fragment.getActivity().getApplication());
@@ -77,7 +86,7 @@ public class RealmController {
 				results.deleteFromRealm(mPosition);
 			}
 		});
-		Toast.makeText(context, title + " is removed from Realm", Toast.LENGTH_SHORT).show();
+		Toast.makeText(context, title + " entry was removed from the Diary", Toast.LENGTH_LONG).show();
 //		http://www.androidhive.info/2016/05/android-working-with-realm-database-replacing-sqlite-core-data/
 //		if (results.size() == 0) {
 //			Prefs.with(context).setPreLoad(false);

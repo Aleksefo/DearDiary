@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
 		realm = Realm.getDefaultInstance();
 		recyclerView = (RecyclerView) findViewById(R.id.recycler);
-		adapter = new RecAdapter(realm.where(Entry.class).findAll());
+		adapter = new RecAdapter(realm.where(Entry.class).findAll(), this);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setAdapter(adapter);
@@ -99,29 +99,29 @@ public class MainActivity extends AppCompatActivity {
 		startActivity(addTaskIntent);
 	}
 
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		int position = -1;
-		try {
-			position = ((RecAdapter) recyclerView.getAdapter()).getPosition();
-
-		} catch (Exception e) {
-			Log.d(TAG, e.getLocalizedMessage(), e);
-			return super.onContextItemSelected(item);
-		}
-		switch (item.getItemId()) {
-			case R.id.action_edit:
-
-				return true;
-			case R.id.action_share:
-				return true;
-			case R.id.action_delete:
-				RealmController.with(this).deleteEntry(position);
-				return true;
-			default:
-				return super.onContextItemSelected(item);
-		}
-	}
+//	@Override
+//	public boolean onContextItemSelected(MenuItem item) {
+//		int position = -1;
+//		try {
+//			position = ((RecAdapter) recyclerView.getAdapter()).getPosition();
+//
+//		} catch (Exception e) {
+//			Log.d(TAG, e.getLocalizedMessage(), e);
+//			return super.onContextItemSelected(item);
+//		}
+//		switch (item.getItemId()) {
+//			case R.id.action_edit:
+//
+//				return true;
+//			case R.id.action_share:
+//				return true;
+//			case R.id.action_delete:
+//				RealmController.with(this).deleteEntry(position);
+//				return true;
+//			default:
+//				return super.onContextItemSelected(item);
+//		}
+//	}
 
 	//to prevent memory leak
 	@Override

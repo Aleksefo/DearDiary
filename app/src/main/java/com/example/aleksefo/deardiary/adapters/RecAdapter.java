@@ -1,6 +1,9 @@
 package com.example.aleksefo.deardiary.adapters;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -15,7 +18,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.aleksefo.deardiary.R;
+import com.example.aleksefo.deardiary.activity.MainActivity;
 import com.example.aleksefo.deardiary.model.Entry;
+import com.example.aleksefo.deardiary.realm.RealmController;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
@@ -25,9 +30,11 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 
 	private static final String TAG = "RecAdapter";
 	private int position;
+	private Context mCtx;
 
-	public RecAdapter(OrderedRealmCollection<Entry> data) {
+	public RecAdapter(OrderedRealmCollection<Entry> data,  Context mCtx) {
 		super(data, true);
+		this.mCtx = mCtx;
 	}
 
 
@@ -63,10 +70,35 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 			@Override
 			public boolean onLongClick(View v) {
 				setPosition(stupid.getAdapterPosition());
-				Log.d(TAG, "onLongClick: "+ getPosition());
+				//creating a popup menu
+				PopupMenu popup = new PopupMenu(mCtx, stupid.itemView);
+				//inflating menu from xml resource
+				popup.inflate(R.menu.menu_context);
+				//adding click listener
+				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						switch (item.getItemId()) {
+							case R.id.action_edit:
+								//handle menu1 click
+								break;
+							case R.id.action_share:
+								//handle menu2 click
+								break;
+							case R.id.action_delete:
+								RealmController.with(mCtx).deleteEntry(getPosition());
+								break;
+						}
+						return false;
+					}
+				});
+				//displaying the popup
+				popup.show();
 				return false;
 			}
 		});
+
+
 	}
 
 	@Override
@@ -76,33 +108,32 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 	}
 
 
-	class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener,
-		OnCreateContextMenuListener {
+	class ViewHolder extends RecyclerView.ViewHolder {
 		TextView title;
 		public Entry data;
 
 		ViewHolder(View view) {
 			super(view);
 			title = (TextView) view.findViewById(R.id.textview);
-			view.setOnLongClickListener(this);
-			view.setOnCreateContextMenuListener(this);
+//			view.setOnLongClickListener(this);
+//			view.setOnCreateContextMenuListener(this);
 		}
 
-		@Override
-		public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-			menu.add(Menu.NONE, R.id.action_edit,
-				Menu.NONE, R.string.action_edit);
-			menu.add(Menu.NONE, R.id.action_share,
-				Menu.NONE, R.string.action_share);
-			menu.add(Menu.NONE, R.id.action_delete,
-				Menu.NONE, R.string.action_delete);
-		}
+//		@Override
+//		public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+//			menu.add(Menu.NONE, R.id.action_edit,
+//				Menu.NONE, R.string.action_edit);
+//			menu.add(Menu.NONE, R.id.action_share,
+//				Menu.NONE, R.string.action_share);
+//			menu.add(Menu.NONE, R.id.action_delete,
+//				Menu.NONE, R.string.action_delete);
+//		}
 
 //todo onLongClick
-		@Override
-		public boolean onLongClick(View v) {
-			//activity.deleteItem(data);
-			return true;
-		}
+//		@Override
+//		public boolean onLongClick(View v) {
+//			//activity.deleteItem(data);
+//			return true;
+//		}
 	}
 }
