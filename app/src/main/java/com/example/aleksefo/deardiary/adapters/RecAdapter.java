@@ -101,7 +101,10 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, ViewHolder> {
 								Log.d(TAG, "openEditEntry: " + id);
 								break;
 							case R.id.action_share:
-								//handle menu2 click
+								Intent sendIntent = new Intent(Intent.ACTION_SEND);
+								sendIntent.putExtra(Intent.EXTRA_TEXT, RealmController.with(mCtx).getEntry(getPosition()).getTitle() +": " + RealmController.with(mCtx).getEntry(getPosition()).getDescr());
+								sendIntent.setType("text/plain");
+								mCtx.startActivity(sendIntent);
 								break;
 							case R.id.action_delete:
 								RealmController.with(mCtx).deleteEntry(getPosition());
