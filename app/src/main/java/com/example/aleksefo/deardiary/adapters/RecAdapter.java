@@ -1,23 +1,18 @@
 package com.example.aleksefo.deardiary.adapters;
 
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnCreateContextMenuListener;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.aleksefo.deardiary.R;
+import com.example.aleksefo.deardiary.activity.EditActivity;
 import com.example.aleksefo.deardiary.activity.MainActivity;
 import com.example.aleksefo.deardiary.model.Entry;
 import com.example.aleksefo.deardiary.realm.RealmController;
@@ -29,8 +24,11 @@ import io.realm.RealmRecyclerViewAdapter;
 public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewHolder> {
 
 	private static final String TAG = "RecAdapter";
+	public static final String EXTRA_ID = "com.example.aleksefo.deardiary.ID";
 	private int position;
 	private Context mCtx;
+	MainActivity mActivity = new MainActivity();
+
 
 	public RecAdapter(OrderedRealmCollection<Entry> data,  Context mCtx) {
 		super(data, true);
@@ -78,9 +76,16 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
+						String id = RealmController.with(mCtx).getEntry(getPosition()).getId();
 						switch (item.getItemId()) {
 							case R.id.action_edit:
-								//handle menu1 click
+//								mActivity.openEditEntry(mCtx, id);
+								Intent intent = new Intent(mCtx, EditActivity.class);
+								intent.putExtra(EXTRA_ID, id);
+								if(intent !=null){
+									mCtx.startActivity(intent);
+								}
+								Log.d(TAG, "openEditEntry: "+id);
 								break;
 							case R.id.action_share:
 								//handle menu2 click

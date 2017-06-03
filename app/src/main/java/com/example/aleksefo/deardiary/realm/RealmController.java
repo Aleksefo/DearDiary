@@ -62,16 +62,30 @@ public class RealmController {
 		return realm;
 	}
 
-	public void addEntry(String title, String descr) {
+	public void addOrUpdateEntry(String title, String descr, String id, Date date) {
+		final Entry e = realm.where(Entry.class).equalTo("id", id).findFirst();
+		final String mTitle = title;
+		final String mDescr = descr;
+		final Date mDate = date;
+		realm.executeTransaction(new Transaction() {
+			@Override
+			public void execute(Realm realm) {
+					e.setTitle(mTitle);
+					e.setDate(mDate);
+					e.setDescr(mDescr);
+			}
+		});
+	}
+	public void addOrUpdateEntry(String title, String descr) {
 		final String mTitle = title;
 		final String mDescr = descr;
 		realm.executeTransaction(new Transaction() {
 			@Override
 			public void execute(Realm realm) {
-				Entry t = RealmController.this.realm.createObject(Entry.class, UUID.randomUUID().toString());
-				t.setTitle(mTitle);
-				t.setDate(new Date());
-				t.setDescr(mDescr);
+					Entry e = RealmController.this.realm.createObject(Entry.class, UUID.randomUUID().toString());
+					e.setTitle(mTitle);
+					e.setDate(new Date());
+					e.setDescr(mDescr);
 			}
 		});
 	}
@@ -91,8 +105,14 @@ public class RealmController {
 //		if (results.size() == 0) {
 //			Prefs.with(context).setPreLoad(false);
 //		}
-
 	}
+	public Entry getEntry(int position) {
+		final int mPosition = position;
+		final RealmResults<Entry> results = realm.where(Entry.class).findAll();
+		Entry e = results.get(mPosition);
+		return e;
+	}
+
 
 
 	//Refresh the realm istance
@@ -116,10 +136,7 @@ public class RealmController {
 		return realm.where(Entry.class).findAll();
 	}
 
-	//query a single item with the given id
-	public Entry getEntry(String id) {
-		return realm.where(Entry.class).equalTo("id", id).findFirst();
-	}
+
 
 	//check if Entry.class is empty
 	public boolean hasEntries() {

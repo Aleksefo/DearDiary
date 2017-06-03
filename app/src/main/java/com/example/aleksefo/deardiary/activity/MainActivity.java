@@ -1,5 +1,6 @@
 package com.example.aleksefo.deardiary.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,23 +9,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.Toast;
+import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.example.aleksefo.deardiary.R;
 import com.example.aleksefo.deardiary.adapters.RecAdapter;
 import com.example.aleksefo.deardiary.model.Entry;
-import com.example.aleksefo.deardiary.realm.RealmController;
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 //todo swipe to delete
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 	private Realm realm;
 	private RecyclerView recyclerView;
 	private RecAdapter adapter;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
 //		for (Entry e: entries) {
 //			Log.d("Realm", e.getTitle() + e.getId() + e.getDate());
 //		}
-//		RealmController.with(this).addEntry();
-		Intent addTaskIntent = new Intent(MainActivity.this, NewActivity.class);
+//		RealmController.with(this).addOrUpdateEntry();
+		Intent addTaskIntent = new Intent(MainActivity.this, EditActivity.class);
 		startActivity(addTaskIntent);
 	}
 

@@ -32,7 +32,7 @@
     </activity>
     <activity android:name=".activity.DetailsActivity" />
     <activity
-      android:name=".activity.NewActivity"
+      android:name=".activity.EditActivity"
       android:label="@string/title_activity_new_activity"
       android:parentActivityName=".activity.MainActivity"
       />
