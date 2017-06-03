@@ -5,15 +5,19 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.aleksefo.deardiary.R;
 import com.example.aleksefo.deardiary.adapters.RecAdapter;
 import com.example.aleksefo.deardiary.model.Entry;
 import io.realm.Realm;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -44,7 +48,10 @@ public class DetailsActivity extends AppCompatActivity {
 		e = realm.where(Entry.class).equalTo("id", idE).findFirst();
 		getSupportActionBar().setTitle(e.getTitle());
 		addDescription.setText(e.getDescr());
-		showDate.setText(e.getDate().toString());
+
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm");
+		String formatted = formatter.format(e.getDate());
+		showDate.setText(formatted);
 //		date = e.getDate();
 	}
 

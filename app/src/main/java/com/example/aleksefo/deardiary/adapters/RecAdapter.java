@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import com.example.aleksefo.deardiary.R;
 import com.example.aleksefo.deardiary.activity.DetailsActivity;
@@ -24,6 +25,9 @@ import com.example.aleksefo.deardiary.model.Entry;
 import com.example.aleksefo.deardiary.realm.RealmController;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 //todo custom text if no items in db
 
@@ -69,7 +73,9 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, ViewHolder> {
 		Log.d(TAG, "onBindViewHolder: checking" + obj);
 //		holder.data = obj;
 		holder.title.setText(obj.getTitle());
-		holder.showDate.setText(obj.getDate().toString());
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm");
+		String formatted = formatter.format(obj.getDate());
+		holder.showDate.setText(formatted);
 			holder.itemView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
