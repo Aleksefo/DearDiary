@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.aleksefo.deardiary.R;
+import com.example.aleksefo.deardiary.activity.DetailsActivity;
 import com.example.aleksefo.deardiary.activity.EditActivity;
 import com.example.aleksefo.deardiary.activity.MainActivity;
 import com.example.aleksefo.deardiary.model.Entry;
@@ -30,11 +32,10 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 	MainActivity mActivity = new MainActivity();
 
 
-	public RecAdapter(OrderedRealmCollection<Entry> data,  Context mCtx) {
+	public RecAdapter(OrderedRealmCollection<Entry> data, Context mCtx) {
 		super(data, true);
 		this.mCtx = mCtx;
 	}
-
 
 
 	@Override
@@ -61,9 +62,19 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 	public void onBindViewHolder(ViewHolder holder, int position) {
 		final ViewHolder stupid = holder;
 		Entry obj = getData().get(position);
-		Log.d(TAG, "onBindViewHolder: checking"+ obj);
+		Log.d(TAG, "onBindViewHolder: checking" + obj);
 		holder.data = obj;
 		holder.title.setText(obj.getTitle());
+		holder.itemView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setPosition(stupid.getAdapterPosition());
+				String id = RealmController.with(mCtx).getEntry(getPosition()).getId();
+				Intent intent = new Intent(mCtx, DetailsActivity.class);
+				intent.putExtra(EXTRA_ID, id);
+				mCtx.startActivity(intent);
+			}
+		});
 		holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
@@ -79,13 +90,10 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 						String id = RealmController.with(mCtx).getEntry(getPosition()).getId();
 						switch (item.getItemId()) {
 							case R.id.action_edit:
-//								mActivity.openEditEntry(mCtx, id);
 								Intent intent = new Intent(mCtx, EditActivity.class);
 								intent.putExtra(EXTRA_ID, id);
-								if(intent !=null){
-									mCtx.startActivity(intent);
-								}
-								Log.d(TAG, "openEditEntry: "+id);
+								mCtx.startActivity(intent);
+								Log.d(TAG, "openEditEntry: " + id);
 								break;
 							case R.id.action_share:
 								//handle menu2 click
@@ -114,6 +122,7 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 
 
 	class ViewHolder extends RecyclerView.ViewHolder {
+
 		TextView title;
 		public Entry data;
 

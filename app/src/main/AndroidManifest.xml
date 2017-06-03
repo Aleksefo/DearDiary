@@ -20,22 +20,23 @@
 
       >
       <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-         <category android:name="android.intent.category.LAUNCHER" />
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
     <activity android:name=".activity.SplashActivity">
       <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
+        <action android:name="android.intent.action.MAIN" />
         <!--<category android:name="android.intent.category.LAUNCHER" />-->
       </intent-filter>
     </activity>
-    <activity android:name=".activity.DetailsActivity" />
     <activity
-      android:name=".activity.EditActivity"
+      android:name=".activity.DetailsActivity"
+      android:parentActivityName=".activity.MainActivity" />
+    <activity
       android:label="@string/title_activity_new_activity"
-      android:parentActivityName=".activity.MainActivity"
-      />
+      android:name=".activity.EditActivity"
+      android:parentActivityName=".activity.MainActivity" />
   </application>
 
 </manifest>

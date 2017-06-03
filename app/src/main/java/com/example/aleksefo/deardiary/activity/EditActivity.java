@@ -15,7 +15,6 @@ import com.example.aleksefo.deardiary.adapters.RecAdapter;
 import com.example.aleksefo.deardiary.model.Entry;
 import com.example.aleksefo.deardiary.realm.RealmController;
 import io.realm.Realm;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class EditActivity extends AppCompatActivity {
@@ -39,14 +38,12 @@ public class EditActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new);
+		setContentView(R.layout.activity_edit);
 		ButterKnife.bind(this);
 		realm = Realm.getDefaultInstance();
 
-		intent = getIntent();
-		Log.d(TAG, "onCreate: " +intent);
-		Log.d(TAG, "onCreate: "+intent.getStringExtra(RecAdapter.EXTRA_ID));
 		//for editMode
+		intent = getIntent();
 		if (intent.getStringExtra(RecAdapter.EXTRA_ID) != null) {
 			id = intent.getStringExtra(RecAdapter.EXTRA_ID);
 			Entry e = realm.where(Entry.class).equalTo("id", id).findFirst();
