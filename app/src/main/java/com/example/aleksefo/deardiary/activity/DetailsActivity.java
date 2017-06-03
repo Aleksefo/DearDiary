@@ -32,10 +32,10 @@ public class DetailsActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_details);
 		ButterKnife.bind(this);
 		realm = Realm.getDefaultInstance();
-
 		intent = getIntent();
 		id = intent.getStringExtra(RecAdapter.EXTRA_ID);
 		Entry e = realm.where(Entry.class).equalTo("id", id).findFirst();
+		getSupportActionBar().setTitle(e.getTitle());
 		addDescription.setText(e.getDescr());
 		showDate.setText(e.getDate().toString());
 //		date = e.getDate();

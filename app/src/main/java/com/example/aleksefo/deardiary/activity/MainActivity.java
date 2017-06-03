@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setAdapter(adapter);
 
-		registerForContextMenu(recyclerView);
 	}
 
 	@Override

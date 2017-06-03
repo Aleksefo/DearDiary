@@ -45,6 +45,7 @@ public class EditActivity extends AppCompatActivity {
 		//for editMode
 		intent = getIntent();
 		if (intent.getStringExtra(RecAdapter.EXTRA_ID) != null) {
+			getSupportActionBar().setTitle("Edit Entry");
 			id = intent.getStringExtra(RecAdapter.EXTRA_ID);
 			Entry e = realm.where(Entry.class).equalTo("id", id).findFirst();
 			addTitle.setText(e.getTitle());

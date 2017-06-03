@@ -110,51 +110,27 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, ViewHolder> {
 						return false;
 					}
 				});
-				//displaying the popup
 				popup.show();
 				return false;
 			}
 		});
-
-
 	}
 
 	@Override
 	public void onViewRecycled(ViewHolder holder) {
 		holder.itemView.setOnLongClickListener(null);
+		holder.itemView.setOnClickListener(null);
 		super.onViewRecycled(holder);
 	}
 
-
 	class ViewHolder extends RecyclerView.ViewHolder {
-
 		TextView title;
 		TextView showDate;
-//		public Entry data;
 
 		ViewHolder(View view) {
 			super(view);
 			title = (TextView) view.findViewById(R.id.titleText);
 			showDate = (TextView) view.findViewById(R.id.show_dateText);
-//			view.setOnLongClickListener(this);
-//			view.setOnCreateContextMenuListener(this);
 		}
-
-//		@Override
-//		public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-//			menu.add(Menu.NONE, R.id.action_edit,
-//				Menu.NONE, R.string.action_edit);
-//			menu.add(Menu.NONE, R.id.action_share,
-//				Menu.NONE, R.string.action_share);
-//			menu.add(Menu.NONE, R.id.action_delete,
-//				Menu.NONE, R.string.action_delete);
-//		}
-
-//todo onLongClick
-//		@Override
-//		public boolean onLongClick(View v) {
-//			//activity.deleteItem(data);
-//			return true;
-//		}
 	}
 }
