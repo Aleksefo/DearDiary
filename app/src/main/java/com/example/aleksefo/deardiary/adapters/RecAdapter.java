@@ -4,18 +4,22 @@ package com.example.aleksefo.deardiary.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import butterknife.BindView;
 import com.example.aleksefo.deardiary.R;
 import com.example.aleksefo.deardiary.activity.DetailsActivity;
 import com.example.aleksefo.deardiary.activity.EditActivity;
 import com.example.aleksefo.deardiary.activity.MainActivity;
+import com.example.aleksefo.deardiary.adapters.RecAdapter.ViewHolder;
 import com.example.aleksefo.deardiary.model.Entry;
 import com.example.aleksefo.deardiary.realm.RealmController;
 import io.realm.OrderedRealmCollection;
@@ -23,7 +27,7 @@ import io.realm.RealmRecyclerViewAdapter;
 
 //todo custom text if no items in db
 
-public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewHolder> {
+public class RecAdapter extends RealmRecyclerViewAdapter<Entry, ViewHolder> {
 
 	private static final String TAG = "RecAdapter";
 	public static final String EXTRA_ID = "com.example.aleksefo.deardiary.ID";
@@ -63,9 +67,10 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 		final ViewHolder stupid = holder;
 		Entry obj = getData().get(position);
 		Log.d(TAG, "onBindViewHolder: checking" + obj);
-		holder.data = obj;
+//		holder.data = obj;
 		holder.title.setText(obj.getTitle());
-		holder.itemView.setOnClickListener(new OnClickListener() {
+		holder.showDate.setText(obj.getDate().toString());
+			holder.itemView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setPosition(stupid.getAdapterPosition());
@@ -75,7 +80,7 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 				mCtx.startActivity(intent);
 			}
 		});
-		holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+		holder.itemView.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
 				setPosition(stupid.getAdapterPosition());
@@ -84,7 +89,7 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 				//inflating menu from xml resource
 				popup.inflate(R.menu.menu_context);
 				//adding click listener
-				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+				popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
 						String id = RealmController.with(mCtx).getEntry(getPosition()).getId();
@@ -124,11 +129,13 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, RecAdapter.ViewH
 	class ViewHolder extends RecyclerView.ViewHolder {
 
 		TextView title;
-		public Entry data;
+		TextView showDate;
+//		public Entry data;
 
 		ViewHolder(View view) {
 			super(view);
-			title = (TextView) view.findViewById(R.id.textview);
+			title = (TextView) view.findViewById(R.id.titleText);
+			showDate = (TextView) view.findViewById(R.id.show_dateText);
 //			view.setOnLongClickListener(this);
 //			view.setOnCreateContextMenuListener(this);
 		}

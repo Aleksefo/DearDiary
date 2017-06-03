@@ -68,8 +68,13 @@ public class MainActivity extends AppCompatActivity {
 		int id = item.getItemId();
 
 		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
-
+		if (id == R.id.action_bydate) {
+			adapter = new RecAdapter(realm.where(Entry.class).findAll().sort("date"), this);
+			recyclerView.setAdapter(adapter);
+		}
+		if (id == R.id.action_bytitle) {
+			adapter = new RecAdapter(realm.where(Entry.class).findAll().sort("title"), this);
+			recyclerView.setAdapter(adapter);
 		}
 		//todo add stuff
 //		if(id == R.id.action_add_task){
