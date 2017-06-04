@@ -26,8 +26,10 @@ class MainActivity : AppCompatActivity() {
     private var adapter: RecAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener {
