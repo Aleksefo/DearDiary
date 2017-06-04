@@ -6,6 +6,7 @@ Share your deepest thoughts with your friends or strangers :)
 
 # Libraries used
 Butterknife to make my life easier
+
 Realm as SQLite alternative
 
 # Video Preview
