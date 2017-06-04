@@ -15,6 +15,7 @@ import com.example.aleksefo.deardiary.adapters.RecAdapter;
 import com.example.aleksefo.deardiary.model.Entry;
 import com.example.aleksefo.deardiary.realm.RealmController;
 import io.realm.Realm;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class EditActivity extends AppCompatActivity {
@@ -50,7 +51,9 @@ public class EditActivity extends AppCompatActivity {
 			Entry e = realm.where(Entry.class).equalTo("id", id).findFirst();
 			addTitle.setText(e.getTitle());
 			addDescription.setText(e.getDescr());
-			showDate.setText(e.getDate().toString());
+			SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm");
+			String formatted = formatter.format(e.getDate());
+			showDate.setText(formatted);
 			date = e.getDate();
 		}
 

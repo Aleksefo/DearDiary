@@ -76,7 +76,7 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, ViewHolder> {
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm");
 		String formatted = formatter.format(obj.getDate());
 		holder.showDate.setText(formatted);
-			holder.itemView.setOnClickListener(new OnClickListener() {
+		holder.itemView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setPosition(stupid.getAdapterPosition());
@@ -108,7 +108,10 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, ViewHolder> {
 								break;
 							case R.id.action_share:
 								Intent sendIntent = new Intent(Intent.ACTION_SEND);
-								sendIntent.putExtra(Intent.EXTRA_TEXT, RealmController.with(mCtx).getEntry(getPosition()).getTitle() +": " + RealmController.with(mCtx).getEntry(getPosition()).getDescr());
+								sendIntent.putExtra(Intent.EXTRA_TEXT,
+									RealmController.with(mCtx).getEntry(getPosition()).getTitle()
+										+ ": " + RealmController.with(mCtx).getEntry(getPosition())
+										.getDescr());
 								sendIntent.setType("text/plain");
 								mCtx.startActivity(sendIntent);
 								break;
@@ -133,6 +136,7 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, ViewHolder> {
 	}
 
 	class ViewHolder extends RecyclerView.ViewHolder {
+
 		TextView title;
 		TextView showDate;
 

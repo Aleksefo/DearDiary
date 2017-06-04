@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +49,7 @@ public class DetailsActivity extends AppCompatActivity {
 		e = realm.where(Entry.class).equalTo("id", idE).findFirst();
 		getSupportActionBar().setTitle(e.getTitle());
 		addDescription.setText(e.getDescr());
+		addDescription.setMovementMethod(new ScrollingMovementMethod());
 
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm");
 		String formatted = formatter.format(e.getDate());
