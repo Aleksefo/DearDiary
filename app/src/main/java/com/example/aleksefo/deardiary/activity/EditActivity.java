@@ -3,7 +3,6 @@ package com.example.aleksefo.deardiary.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -73,9 +72,6 @@ public class EditActivity extends AppCompatActivity {
 			if (intent.getStringExtra(RecAdapter.EXTRA_ID) != null) {
 				title = addTitle.getText().toString();
 				descr = addDescription.getText().toString();
-//				date = showDate.getText().toString();
-//				SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-//				Date d = dateformat.parse(date);
 				RealmController.with(this).addOrUpdateEntry(title, descr, id, date);
 			} else {
 				title = addTitle.getText().toString();
@@ -91,6 +87,13 @@ public class EditActivity extends AppCompatActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	//to prevent memory leak
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		realm.close();
 	}
 
 }

@@ -6,20 +6,16 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.aleksefo.deardiary.R;
 import com.example.aleksefo.deardiary.adapters.RecAdapter;
 import com.example.aleksefo.deardiary.model.Entry;
 import io.realm.Realm;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -31,13 +27,11 @@ public class DetailsActivity extends AppCompatActivity {
 	public static final String EXTRA_ID = "com.example.aleksefo.deardiary.ID";
 
 	private Realm realm;
-	private String title;
-	private String descr;
 	private String idE;
-	private Date date;
 	Intent intent;
 	Entry e;
 	private ShareActionProvider mShareActionProvider;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,7 +48,6 @@ public class DetailsActivity extends AppCompatActivity {
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm");
 		String formatted = formatter.format(e.getDate());
 		showDate.setText(formatted);
-//		date = e.getDate();
 	}
 
 	@Override
@@ -70,7 +63,7 @@ public class DetailsActivity extends AppCompatActivity {
 	// Call to update the share intent
 	private void setShareIntent() {
 		Intent sendIntent = new Intent(Intent.ACTION_SEND);
-		sendIntent.putExtra(Intent.EXTRA_TEXT, e.getTitle() +": " + e.getDescr());
+		sendIntent.putExtra(Intent.EXTRA_TEXT, e.getTitle() + ": " + e.getDescr());
 		sendIntent.setType("text/plain");
 		if (mShareActionProvider != null) {
 			mShareActionProvider.setShareIntent(sendIntent);
@@ -89,5 +82,12 @@ public class DetailsActivity extends AppCompatActivity {
 			startActivity(intent);
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	//to prevent memory leak
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		realm.close();
 	}
 }

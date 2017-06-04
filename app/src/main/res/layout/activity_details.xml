@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:scrollbars="none"
-  android:background="@drawable/background">
+  android:background="@drawable/background"
+  android:scrollbars="none">
   <TextView
     android:id="@+id/show_date"
     android:textStyle="bold"
@@ -20,7 +19,6 @@
     app:layout_constraintStart_toStartOf="parent" />
   <TextView
     android:id="@+id/add_description"
-    android:scrollbars = "vertical"
     android:textStyle="bold"
     android:layout_width="0dp"
     android:layout_height="0dp"
@@ -31,6 +29,7 @@
     android:padding="8dp"
     android:background="@drawable/border_brown"
     android:gravity="top|start"
+    android:scrollbars="vertical"
     android:textColor="@color/colorBlack"
     app:layout_constraintBottom_toTopOf="@+id/show_date"
     app:layout_constraintEnd_toEndOf="parent"

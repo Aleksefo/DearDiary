@@ -14,8 +14,6 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-import butterknife.BindView;
 import com.example.aleksefo.deardiary.R;
 import com.example.aleksefo.deardiary.activity.DetailsActivity;
 import com.example.aleksefo.deardiary.activity.EditActivity;
@@ -25,11 +23,7 @@ import com.example.aleksefo.deardiary.model.Entry;
 import com.example.aleksefo.deardiary.realm.RealmController;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-
-//todo custom text if no items in db
 
 public class RecAdapter extends RealmRecyclerViewAdapter<Entry, ViewHolder> {
 
@@ -37,14 +31,11 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, ViewHolder> {
 	public static final String EXTRA_ID = "com.example.aleksefo.deardiary.ID";
 	private int position;
 	private Context mCtx;
-	MainActivity mActivity = new MainActivity();
-
 
 	public RecAdapter(OrderedRealmCollection<Entry> data, Context mCtx) {
 		super(data, true);
 		this.mCtx = mCtx;
 	}
-
 
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -70,8 +61,6 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, ViewHolder> {
 	public void onBindViewHolder(ViewHolder holder, int position) {
 		final ViewHolder stupid = holder;
 		Entry obj = getData().get(position);
-		Log.d(TAG, "onBindViewHolder: checking" + obj);
-//		holder.data = obj;
 		holder.title.setText(obj.getTitle());
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm");
 		String formatted = formatter.format(obj.getDate());
@@ -104,7 +93,6 @@ public class RecAdapter extends RealmRecyclerViewAdapter<Entry, ViewHolder> {
 								Intent intent = new Intent(mCtx, EditActivity.class);
 								intent.putExtra(EXTRA_ID, id);
 								mCtx.startActivity(intent);
-								Log.d(TAG, "openEditEntry: " + id);
 								break;
 							case R.id.action_share:
 								Intent sendIntent = new Intent(Intent.ACTION_SEND);

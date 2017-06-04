@@ -36,28 +36,13 @@ public class RealmController {
 		}
 		return instance;
 	}
-	public static RealmController with(Fragment fragment) {
-		if (instance == null) {
-			instance = new RealmController(fragment.getActivity().getApplication());
-		}
-		return instance;
-	}
 	public static RealmController with(Activity activity) {
 		if (instance == null) {
 			instance = new RealmController(activity.getApplication());
 		}
 		return instance;
 	}
-	public static RealmController with(Application application) {
-		if (instance == null) {
-			instance = new RealmController(application);
-		}
-		return instance;
-	}
 
-	public static RealmController getInstance() {
-		return instance;
-	}
 	public Realm getRealm() {
 		return realm;
 	}
@@ -112,46 +97,4 @@ public class RealmController {
 		Entry e = results.get(mPosition);
 		return e;
 	}
-
-
-
-	//Refresh the realm istance
-	//todo You should either use realm.waitForChange()or open a new Realm instance as appropriate.
-	public void refresh() {
-		realm.refresh();
-	}
-
-	//clear all objects
-	public void clearAll() {
-		realm.executeTransaction(new Transaction() {
-			@Override
-			public void execute(Realm realm) {
-				realm.deleteAll();
-			}
-		});
-	}
-
-	//find all objects
-	public RealmResults<Entry> getEntries() {
-		return realm.where(Entry.class).findAll();
-	}
-
-
-
-	//check if Entry.class is empty
-	public boolean hasEntries() {
-		return !realm.where(Entry.class).findAll().isEmpty();
-	}
-
-	//query example
-	public RealmResults<Entry> queriedEntries() {
-
-		return realm.where(Entry.class)
-//			.contains("author", "Author 0")
-//			.or()
-//			.contains("title", "Realm")
-			.findAll();
-
-	}
 }
-//todo clean this file
